@@ -8,9 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    var isimDizisi : [String] = ["Ömer", "Ali", "Ahmet","Mehmet", "Ayşe", "Dilek","Pınar","Mahmut"]
+    
+    @State var aramaStringi  = ""
+    
+    
+    var filtrelenenVeri: [String] {
+        if aramaStringi == ""{
+            return isimDizisi
+        }
+        return isimDizisi.filter {
+            $0.lowercased().contains(aramaStringi.lowercased())
+        }
+        
+        
+    }
+    
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView{
+            List{
+                ForEach(filtrelenenVeri, id:\.self) { item in
+                    Text(item)
+                }
+            }
+            .listStyle(PlainListStyle())
+            .searchable(text: $aramaStringi)
+            
+            
+            
+            .navigationTitle("İsimler")
+            
+        }
     }
 }
 
